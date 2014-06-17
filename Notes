@@ -1,5 +1,0 @@
-sudo apt-get install libtinyxml-dev
-sudo apt-get install tiled  #for the .tmx files, Tiled Map Editor
-
-#Additional dependencies for sdlmixer
-sudo apt-get install libasound2-dev libpulse-dev
