@@ -23,5 +23,9 @@ x64/
 # Temp files
 *~
 
+#output files
+valgrind.output
+CON
+
 #Netbeans project files 
 nbproject/
