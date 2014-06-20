@@ -14,13 +14,13 @@ LDFLAGS = $(GLEW_LIB):$(SDL_LIB) -lz -lGL -ltinyxml
 
 BIN_DIR = ./bin
 SOURCES = src/AnimatedGraphic.cpp src/BulletHandler.cpp src/CollisionManager.cpp \
-	src/Game.cpp src/GameObjectFactory.cpp src/GameOverState.cpp src/GameStateMachine.cpp \
-	src/InputHandler.cpp src/Level.cpp src/LevelParser.cpp src/main.cpp src/MainMenuState.cpp \
+	src/Game.cpp src/GameObjectFactory.cpp src/GameOverState.cpp \
+	src/GameStateMachine.cpp src/InputHandler.cpp src/Level.cpp \
+	src/LevelParser.cpp src/main.cpp src/MainMenuState.cpp \
 	src/MapLoader.cpp src/MenuButton.cpp src/ObjectLayer.cpp src/PauseState.cpp \
-	src/PlayState.cpp src/Player.cpp \
-	src/ScrollingBackground.cpp src/ShooterObject.cpp src/SoundManager.cpp \
-	src/StateParser.cpp src/TextureManager.cpp src/TileLayer.cpp \
-	src/base64.cpp  
+	src/PlayState.cpp src/Player.cpp src/ScrollingBackground.cpp \
+	src/ShooterObject.cpp src/SoundManager.cpp src/StateParser.cpp \
+	src/TextureManager.cpp src/TileLayer.cpp src/base64.cpp  
 
 TARGET_BIN = $(BIN_DIR)/alienattack
 
@@ -52,8 +52,18 @@ clean:
 	rm -f bin/* && rm -f $(shell find . -name '*.o') 
 #TESTS #########################################################################
 # Testing iteration is make clean, make game-tests, ./bin/GameTests
-TESTS_SOURCES = src/tests/TestMain.cpp  
+TESTS_SOURCES = tests/TestMain.cpp  tests/BulletHandlerTests.cpp \
+	tests/CollisionManagerTests.cpp tests/GameObjectFactoryTests.cpp \
+	tests/InputHandlerTests.cpp tests/SoundManagerTests.cpp \
+	tests/TextureManagerTests.cpp src/AnimatedGraphic.cpp src/BulletHandler.cpp src/CollisionManager.cpp \
+	src/Game.cpp src/GameObjectFactory.cpp src/GameOverState.cpp \
+	src/GameStateMachine.cpp src/InputHandler.cpp src/Level.cpp \
+	src/LevelParser.cpp src/MainMenuState.cpp \
+	src/MapLoader.cpp src/MenuButton.cpp src/ObjectLayer.cpp src/PauseState.cpp \
+	src/PlayState.cpp src/Player.cpp src/ScrollingBackground.cpp \
+	src/ShooterObject.cpp src/SoundManager.cpp src/StateParser.cpp \
+	src/TextureManager.cpp src/TileLayer.cpp src/base64.cpp
 
-game-tests: $(TESTS_SOURCES:.cpp=.o)
-	$(CXX) $^ $(LDFLAGS) -lgtest -lgmock -pthread -o bin/GameTests	
+game-tests: $(TESTS_SOURCES:.cpp=.o) 
+	$(CXX) $^ $(LDFLAGS) -lgtest -lgmock -pthread -o bin/game-tests	
 
