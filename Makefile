@@ -5,12 +5,11 @@ DATA_PREFIX=data/
 
 XX = g++
 SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/local/lib
-GLEW_LIB = -L/usr/lib64 -lGLEW -Wl,-rpath=/usr/lib64
 
 SDL_INCLUDE = -I /usr/local/include
 
 CXXFLAGS = -Wall -c -g -std=c++11 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(SDL_INCLUDE) 
-LDFLAGS = $(GLEW_LIB):$(SDL_LIB) -lz -lGL -ltinyxml
+LDFLAGS = $(SDL_LIB) -lz -ltinyxml
 
 BIN_DIR = ./bin
 SOURCES = src/AnimatedGraphic.cpp src/BulletHandler.cpp src/CollisionManager.cpp \
@@ -53,7 +52,9 @@ clean:
 #TESTS #########################################################################
 # Testing iteration is make clean, make game-tests, ./bin/GameTests
 TESTS_SOURCES = tests/TestMain.cpp  tests/BulletHandlerTests.cpp \
-	tests/CollisionManagerTests.cpp tests/GameObjectFactoryTests.cpp \
+	tests/CollisionManagerTests.cpp tests/GameTests.cpp \
+	tests/GameObjectFactoryTests.cpp tests/MenuButtonTests.cpp \
+	tests/PlayerTests.cpp \
 	tests/InputHandlerTests.cpp tests/SoundManagerTests.cpp \
 	tests/TextureManagerTests.cpp src/AnimatedGraphic.cpp src/BulletHandler.cpp src/CollisionManager.cpp \
 	src/Game.cpp src/GameObjectFactory.cpp src/GameOverState.cpp \

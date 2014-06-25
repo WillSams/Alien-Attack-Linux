@@ -2,7 +2,17 @@
 
 #include "../src/Game.h"
 
-TEST(DISABLED_GameTests, testInit) { }
+TEST(GameTests, testInit) { 
+    const char* title = "GameTests::testInit";
+    int xpos = 30;
+    int ypos = 35;
+    int width = 640;
+    int height = 480;
+    bool fullscreen = false;
+    
+    bool isInit = TheGame::Instance()->init(title, xpos, ypos, width, height, fullscreen);
+    ASSERT_EQ(true, isInit);
+}
 
 TEST(DISABLED_GameTests, testSetCurrentLevel) { }
 

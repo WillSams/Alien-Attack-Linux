@@ -20,7 +20,7 @@ Example project from 'SDL Game Development' by Shaun Mitchell
     sudo apt-get install libtinyxml-dev
     sudo apt-get install tiled  #for the .tmx files, Tiled Map Editor
 
-### Unit testing supports w/Google-Test 
+### Testing supports w/Google-Test (Note: I wrote integration tests, not unit tests)
     sudo apt-get install libgtest-dev
     cd /usr/src/gtest
     sudo cmake CMakeLists.txt
