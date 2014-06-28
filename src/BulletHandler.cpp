@@ -9,7 +9,6 @@
 #include "BulletHandler.h"
 #include "Game.h"
 
-
 BulletHandler* BulletHandler::s_pInstance = new BulletHandler();
 
 BulletHandler::BulletHandler()

@@ -12,8 +12,8 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "../src/Bullet.h"
-#include "../src/Game.h"
 #include "../src/ShooterObject.h"
+
 class MockPlayerBullet : public PlayerBullet {    
     public:
         virtual ~MockPlayerBullet() {}
@@ -50,6 +50,16 @@ class MockBulletHandler : public BulletHandler {
         MOCK_METHOD0(drawBullets, void());
 
         MOCK_METHOD0(clearBullets, void());
+};
+
+
+#include "../src/Game.h"
+class MockGame: public Game {
+    public:
+        MOCK_METHOD0(render, void());
+        MOCK_METHOD0(update, void());
+        MOCK_METHOD0(handleEvents, void());
+        MOCK_METHOD0(clean, void()); 
 };
 
 /*

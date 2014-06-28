@@ -4,7 +4,7 @@
 Example project from 'SDL Game Development' by Shaun Mitchell. The book explains everything from a Windows user perspective. Here are instructions to get everything working under Ubuntu:
 
 ### Download & compile the latest version SDL2 
-Including image, ttf, and mixer extensions).  Please see my [gist explaining how to build said extensions][1]. 
+Including image, ttf, and mixer extensions.  Please see my [gist explaining how to build said extensions][1]. 
 
 ### Install support libraries for Alien Attack
     sudo apt-get install libtinyxml-dev
