@@ -72,7 +72,7 @@ void ObjectLayer::update(Level* pLevel)
 
 void ObjectLayer::render()
 {
-    for(int i = 0; i < m_gameObjects.size(); i++)
+    for(unsigned int i = 0; i < m_gameObjects.size(); i++)
     {
         if(m_gameObjects[i]->getPosition().getX() <= TheGame::Instance()->getGameWidth())
         {

@@ -72,12 +72,12 @@ void BulletHandler::updateBullets()
 
 void BulletHandler::drawBullets()
 {
-    for (int p = 0; p < m_playerBullets.size(); p++)
+    for (unsigned int p = 0; p < m_playerBullets.size(); p++)
     {
         m_playerBullets[p]->draw();
     }
     
-    for (int e = 0; e < m_enemyBullets.size(); e++)
+    for (unsigned int e = 0; e < m_enemyBullets.size(); e++)
     {
         m_enemyBullets[e]->draw();
     }

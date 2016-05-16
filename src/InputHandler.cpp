@@ -41,7 +41,7 @@ void InputHandler::clean()
     // we need to clean up after ourselves and close the joysticks we opened
     if(m_bJoysticksInitialised)
     {
-        for(unsigned int i = 0; i < SDL_NumJoysticks(); i++)
+        for(signed int i = 0; i < SDL_NumJoysticks(); i++)
         {
             SDL_JoystickClose(m_joysticks[i]);
         }

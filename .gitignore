@@ -26,6 +26,7 @@ x64/
 #output files
 valgrind.output
 CON
+*.swp
 
 #Netbeans project files 
 nbproject/

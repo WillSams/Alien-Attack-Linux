@@ -31,7 +31,7 @@ void PauseState::update()
 {
     if(m_loadingComplete && !m_gameObjects.empty())
     {
-        for(int i = 0; i < m_gameObjects.size(); i++)
+        for(unsigned int i = 0; i < m_gameObjects.size(); i++)
         {
             m_gameObjects[i]->update();
         }
@@ -42,7 +42,7 @@ void PauseState::render()
 {
     if(m_loadingComplete && !m_gameObjects.empty())
     {
-        for(int i = 0; i < m_gameObjects.size(); i++)
+        for(unsigned int i = 0; i < m_gameObjects.size(); i++)
         {
             m_gameObjects[i]->draw();
         }
@@ -70,7 +70,7 @@ bool PauseState::onExit()
 {
     if(m_loadingComplete && !m_gameObjects.empty())
     {
-        for(int i = 0; i < m_gameObjects.size(); i++)
+        for(unsigned int i = 0; i < m_gameObjects.size(); i++)
         {
             m_gameObjects[i]->clean();
             delete m_gameObjects[i];
@@ -78,7 +78,7 @@ bool PauseState::onExit()
         m_gameObjects.clear();
     }
     // clear the texture manager
-    for(int i = 0; i < m_textureIDList.size(); i++)
+    for(unsigned int i = 0; i < m_textureIDList.size(); i++)
     {
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
@@ -93,7 +93,7 @@ void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
     // go through the game objects
     if(!m_gameObjects.empty())
     {
-        for(int i = 0; i < m_gameObjects.size(); i++)
+        for(unsigned int i = 0; i < m_gameObjects.size(); i++)
         {
             // if they are of type MenuButton then assign a callback based on the id passed in from the file
             if(dynamic_cast<MenuButton*>(m_gameObjects[i]))

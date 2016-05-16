@@ -6,9 +6,9 @@ DATA_PREFIX=data/
 XX = g++
 SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/local/lib
 
-SDL_INCLUDE = -I /usr/local/include
+SDL_INCLUDE = -isystem /usr/local/include
 
-CXXFLAGS = -Wall -c -g -std=c++11 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(SDL_INCLUDE) 
+CXXFLAGS = -Wall -c -g -Wno-reorder -std=c++11 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(SDL_INCLUDE) 
 LDFLAGS = $(SDL_LIB) -lz -ltinyxml
 
 BIN_DIR = ./bin

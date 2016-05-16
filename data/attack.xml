@@ -14,7 +14,7 @@
     
     <PLAY>
         <TEXTURES>
-            <texture filename="gfx/helicopter.png" ID="helicopter"/>
+            <texture filename="helicopter.png" ID="helicopter"/>
             <texture filename="helicopter2.png" ID="helicopter2"/>
         </TEXTURES>
         

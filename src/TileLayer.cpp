@@ -40,7 +40,7 @@ void TileLayer::render()
     x2 = int(m_position.getX()) % m_tileSize;
     y2 = int(m_position.getY()) % m_tileSize;
     
-    for(int i = 0; i < m_numRows; i++)
+    for(signed int i = 0; i < m_numRows; i++)
     {
         for(int j = 0; j < m_numColumns; j++)
         {
@@ -62,7 +62,7 @@ void TileLayer::render()
 
 Tileset TileLayer::getTilesetByID(int tileID)
 {
-    for(int i = 0; i < m_tilesets.size(); i++)
+    for(unsigned int i = 0; i < m_tilesets.size(); i++)
     {
         if( i + 1 <= m_tilesets.size() - 1)
         {
