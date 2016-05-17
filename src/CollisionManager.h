@@ -1,13 +1,9 @@
-//
-//  CollisionManager.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 28/03/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
+#ifndef COLLISIONMANAGER_H_DEFINED
+#define COLLISIONMANAGER_H_DEFINED
 
-#ifndef __SDL_Game_Programming_Book__CollisionManager__
-#define __SDL_Game_Programming_Book__CollisionManager__
+#include "Enemy.h"
+#include "BulletHandler.h"
+#include "TileLayer.h"
 
 #include <iostream>
 #include <vector>
@@ -16,14 +12,19 @@ class Player;
 class GameObject;
 class TileLayer;
 
-class CollisionManager
-{
-public:
+class CollisionManager {
+    
+public:    
+    const static int s_buffer;
+
+    static bool RectRect(SDL_Rect* A, SDL_Rect* B);
     
     void checkPlayerEnemyBulletCollision(Player* pPlayer);
-    void checkPlayerEnemyCollision(Player* pPlayer, const std::vector<GameObject*> &objects);
+    void checkPlayerEnemyCollision(Player* pPlayer, 
+        const std::vector<GameObject*> &objects);
     void checkEnemyPlayerBulletCollision(const std::vector<GameObject*>& objects);
-    void checkPlayerTileCollision(Player* pPlayer, const std::vector<TileLayer*>& collisionLayers);
+    void checkPlayerTileCollision(Player* pPlayer, 
+        const std::vector<TileLayer*>& collisionLayers);
 };
 
-#endif /* defined(__SDL_Game_Programming_Book__CollisionManager__) */
+#endif /* defined(COLLISIONMANAGER_H_DEFINED) */

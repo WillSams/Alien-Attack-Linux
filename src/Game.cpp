@@ -1,34 +1,21 @@
-//
-//  Game.cpp
-//  SDL Game Programming Book
-//
-//
-
-#include <iostream>
-
 #include "Game.h"
-#include "TextureManager.h"
-#include "InputHandler.h"
-#include "MainMenuState.h"
-#include "GameObjectFactory.h"
-#include "MenuButton.h"
-#include "AnimatedGraphic.h"
-#include "Player.h"
-#include "ScrollingBackground.h"
-#include "SoundManager.h"
-#include "RoofTurret.h"
-#include "ShotGlider.h"
-#include "Eskeletor.h"
-#include "Level1Boss.h"
-#include "GameOverState.h"
 
 Game* Game::s_pInstance = 0;
 
+ Game* Game::Instance() {
+    if(s_pInstance == 0) {
+        s_pInstance = new Game();
+        return s_pInstance;
+    }
+
+    return s_pInstance;
+}
+
 Game::Game():
-    m_pWindow(0),
-    m_pRenderer(0),
+    m_pWindow(),
+    m_pRenderer(),
     m_bRunning(false),
-    m_pGameStateMachine(0),
+    m_pGameStateMachine(),
     m_playerLives(3),
     m_scrollSpeed(0.8),
     m_bLevelComplete(false),
@@ -42,13 +29,45 @@ Game::Game():
     m_currentLevel = 1;
 }
 
-Game::~Game() {          // we must clean up after ourselves to prevent memory leaks   
-    m_pRenderer= 0;
-    m_pWindow = 0;
+Game::~Game() {          // we must clean up after ourselves to prevent memory leaks    
+    m_pGameStateMachine = nullptr;
 }
+
+SDL_Renderer* Game::getRenderer() const { return m_pRenderer; }
+SDL_Window* Game::getWindow() const { return m_pWindow; }
+GameStateMachine* Game::getStateMachine() { return m_pGameStateMachine; }
+void Game::setPlayerLives(int lives) { m_playerLives = lives; }
+int Game::getPlayerLives() { return m_playerLives; }
+
+void Game::setCurrentLevel(int currentLevel) {     
+    m_currentLevel = currentLevel;
+    m_pGameStateMachine->changeState(new GameOverState());
+    m_bLevelComplete = false;
+}
+const int Game::getCurrentLevel() { return m_currentLevel; }
+
+void Game::setNextLevel(int nextLevel) { m_nextLevel = nextLevel; }
+const int Game::getNextLevel() { return m_nextLevel; }
+
+void Game::setLevelComplete(bool levelComplete) { m_bLevelComplete = levelComplete; }
+const bool Game::getLevelComplete() { return m_bLevelComplete; }
+
+bool Game::running() { return m_bRunning; }
+
+void Game::quit() { m_bRunning = false; }
+
+int Game::getGameWidth() const { return m_gameWidth; }
+int Game::getGameHeight() const { return m_gameHeight; }
+float Game::getScrollSpeed() { return m_scrollSpeed; }
+
+bool Game::changingState() { return m_bChangingState; }
+void Game::changingState(bool cs) { m_bChangingState = cs; }
+
+std::vector<std::string> Game::getLevelFiles() { return m_levelFiles; }
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, 
     bool fullscreen) {
+    
     int flags = 0;
     
     // store the game width and height
@@ -112,12 +131,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height,
     return true;
 }
 
-void Game::setCurrentLevel(int currentLevel) {
-    m_currentLevel = currentLevel;
-    m_pGameStateMachine->changeState(new GameOverState());
-    m_bLevelComplete = false;
-}
-
 void Game::render() {
     SDL_RenderClear(m_pRenderer);
     m_pGameStateMachine->render();
@@ -131,15 +144,13 @@ void Game::handleEvents() { TheInputHandler::Instance()->update(); }
 void Game::clean() {
     std::cout << "cleaning game\n";
     
-    TheInputHandler::Instance()->clean();
+    TheInputHandler::Instance()->clean();    
+    TheTextureManager::Instance()->clearTextureMap();
+    TheSoundManager::Instance()->clearSoundMap();
     
     m_pGameStateMachine->clean();
-    
-    m_pGameStateMachine = 0;
     delete m_pGameStateMachine;
-    
-    TheTextureManager::Instance()->clearTextureMap();
-    
+            
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
     SDL_Quit();

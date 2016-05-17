@@ -1,30 +1,20 @@
-//
-//  Enemy.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 19/01/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
+#ifndef ENEMY_H_DEFINED
+#define ENEMY_H_DEFINED
 
-#ifndef __SDL_Game_Programming_Book__Enemy__
-#define __SDL_Game_Programming_Book__Enemy__
-
-#include <iostream>
 #include "ShooterObject.h"
 
+#include <iostream>
+
 // Enemy base class
-class Enemy : public ShooterObject
-{
-public:
+class Enemy : public ShooterObject {
+public:    
+    virtual std::string type();
     
-    virtual std::string type() { return "Enemy"; }
-    
-protected:
-    
+protected:    
     int m_health;
     
-    Enemy() : ShooterObject() {}
-    virtual ~Enemy() {}
+    Enemy();
+    virtual ~Enemy();
 };
 
-#endif /* defined(__SDL_Game_Programming_Book__Enemy__) */
+#endif /* defined(ENEMY_H_DEFINED) */

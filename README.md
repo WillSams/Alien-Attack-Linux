@@ -1,17 +1,17 @@
 # Alien-Attack-Linux
-==================
+=====================
 
-Example project from 'SDL Game Development' by Shaun Mitchell. The book explains everything from a Windows user perspective. Here are instructions to get everything working under Ubuntu:
+Example project from ['SDL Game Development' by Shaun Mitchell][2]. The book explains everything from a Windows user perspective. Here are instructions to get everything working under Linux (especially Debian/Ubuntu):
 
 ### Download & compile the latest version SDL2 
-Including image, ttf, and mixer extensions.  Please see my [gist explaining how to build said extensions][1]. 
+Including image, ttf, and mixer extensions.  Please see my [gist explaining how to build those extensions][1]. 
 
-### Install support libraries for Alien Attack
+### Install map editing support tool, [Tiled Map Editor][3]
     sudo apt-get install libtinyxml-dev
-    sudo apt-get install tiled  #for the .tmx files, Tiled Map Editor
+    sudo apt-get install tiled  #for the .tmx files
 
 ### Testing supports w/Google-Test 
-Note: I wrote integration tests, not unit tests.  Writing them to help me get intimate with the source quicker.  I may remove them when I'm done.
+TODO: Writing integration tests to assist with code changes.
 
     sudo apt-get install libgtest-dev
     cd /usr/src/gtest
@@ -27,3 +27,5 @@ Note: I wrote integration tests, not unit tests.  Writing them to help me get in
     
     
 [1]: https://gist.github.com/WillSams/e2bb2874ace22b90f90f
+[2]: https://www.packtpub.com/game-development/sdl-game-development
+[3]: http://www.mapeditor.org/

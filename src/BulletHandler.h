@@ -1,45 +1,31 @@
-//
-//  BulletHandler.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 28/03/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
+#ifndef BULLETHANDLER_H_DEFINED
+#define BULLETHANDLER_H_DEFINED
 
-#ifndef __SDL_Game_Programming_Book__BulletHandler__
-#define __SDL_Game_Programming_Book__BulletHandler__
+#include "Bullet.h"
+#include "Game.h"
 
 #include <iostream>
 #include <vector>
-#include "Bullet.h"
 
-class BulletHandler
-{
-public:
+class BulletHandler {
     
-    static BulletHandler* Instance()
-    {
-        if(s_pInstance == 0)
-        {
-            s_pInstance = new BulletHandler();
-            return s_pInstance;
-        }
-        return s_pInstance;
-    }
+public:    
+    static BulletHandler* Instance();
     
-    void addPlayerBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
-    void addEnemyBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
+    void addPlayerBullet(int x, int y, int width, int height, 
+        std::string textureID, int numFrames, Vector2D heading);
+    void addEnemyBullet(int x, int y, int width, int height, 
+        std::string textureID, int numFrames, Vector2D heading);
     
     void updateBullets();
     void drawBullets();
     
     void clearBullets();
     
-    const std::vector<PlayerBullet*> getPlayerBullets() { return m_playerBullets; }
-    const std::vector<EnemyBullet*> getEnemyBullets() { return m_enemyBullets; }
+    const std::vector<PlayerBullet*> getPlayerBullets();
+    const std::vector<EnemyBullet*> getEnemyBullets();
     
-private:
-    
+private:    
     BulletHandler();
     ~BulletHandler();
     
@@ -55,4 +41,4 @@ private:
 
 typedef BulletHandler TheBulletHandler;
 
-#endif /* defined(__SDL_Game_Programming_Book__BulletHandler__) */
+#endif /* defined(BULLETHANDLER_H_DEFINED) */

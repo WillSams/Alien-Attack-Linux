@@ -1,20 +1,29 @@
-//
-//  Game.h
-//  SDL Game Programming Book
-//
-//
+#ifndef GAME_H_DEFINED
+#define GAME_H_DEFINED
 
-#ifndef __SDL_Game_Programming_Book__Game__
-#define __SDL_Game_Programming_Book__Game__
+#include "TextureManager.h"
+#include "InputHandler.h"
+#include "MainMenuState.h"
+#include "GameObjectFactory.h"
+#include "MenuButton.h"
+#include "AnimatedGraphic.h"
+#include "Player.h"
+#include "ScrollingBackground.h"
+#include "SoundManager.h"
+#include "RoofTurret.h"
+#include "ShotGlider.h"
+#include "Eskeletor.h"
+#include "Level1Boss.h"
+#include "GameOverState.h"
+#include "GameStateMachine.h"
+
+#include <iostream>
 #include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 
-#include "GameStateMachine.h"
-
 class Game {
-    //member fields
     private:
         bool m_bChangingState;
 
@@ -38,48 +47,37 @@ class Game {
         bool m_bLevelComplete;
 
         std::vector<std::string> m_levelFiles;
-    
-    //member properties
-    private:
-
+ 
     public:    
-        static Game* Instance() {
-            if(s_pInstance == 0) {
-                s_pInstance = new Game();
-                return s_pInstance;
-            }
+        static Game* Instance();
 
-            return s_pInstance;
-        }
+        SDL_Renderer* getRenderer() const;
+        SDL_Window* getWindow() const;
+        GameStateMachine* getStateMachine();
 
-        SDL_Renderer* getRenderer() const { return m_pRenderer; }
-        SDL_Window* getWindow() const { return m_pWindow; }
-        GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
-
-        void setPlayerLives(int lives) { m_playerLives = lives; }
-        int getPlayerLives() { return m_playerLives; }
+        void setPlayerLives(int lives);
+        int getPlayerLives();
 
         void setCurrentLevel(int currentLevel);
-        const int getCurrentLevel() { return m_currentLevel; }
+        const int getCurrentLevel();
 
-        void setNextLevel(int nextLevel) { m_nextLevel = nextLevel; }
-        const int getNextLevel() { return m_nextLevel; }
+        void setNextLevel(int nextLevel);
+        const int getNextLevel();
 
-        void setLevelComplete(bool levelComplete) { m_bLevelComplete = levelComplete; }
-        const bool getLevelComplete() { return m_bLevelComplete; }
+        void setLevelComplete(bool levelComplete);
+        const bool getLevelComplete();
 
-        bool running() { return m_bRunning; }
+        bool running();
+        void quit();
 
-        void quit() { m_bRunning = false; }
+        int getGameWidth() const;
+        int getGameHeight() const;
+        float getScrollSpeed();
 
-        int getGameWidth() const { return m_gameWidth; }
-        int getGameHeight() const { return m_gameHeight; }
-        float getScrollSpeed() { return m_scrollSpeed; }
+        bool changingState();
+        void changingState(bool cs);
 
-        bool changingState() { return m_bChangingState; }
-        void changingState(bool cs) { m_bChangingState = cs; }
-
-        std::vector<std::string> getLevelFiles() { return m_levelFiles; }
+        std::vector<std::string> getLevelFiles();
     
     
     //member functions
@@ -101,4 +99,4 @@ class Game {
 
 typedef Game TheGame;
 
-#endif /* defined(__SDL_Game_Programming_Book__Game__) */
+#endif /* defined(GAME_H_DEFINED) */

@@ -1,13 +1,5 @@
-//
-//  GameObject.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 06/01/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
-
-#ifndef SDL_Game_Programming_Book_GameObject_h
-#define SDL_Game_Programming_Book_GameObject_h
+#ifndef GAMEOBJECT_H_DEFINED
+#define GAMEOBJECT_H_DEFINED
 
 #include "LoaderParams.h"
 #include "Vector2D.h"

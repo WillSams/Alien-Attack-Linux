@@ -67,3 +67,23 @@ void SoundManager::playSound(std::string id, int loop)
 {
     Mix_PlayChannel(-1, m_sfxs[id], loop);
 }
+
+void SoundManager::clearSoundMap() {
+	std::map<std::string,Mix_Music*>::iterator i;
+	for(i=m_music.begin();i!=m_music.end();i++){
+		if(i->second!=nullptr){
+			Mix_FreeMusic(i->second);
+			i->second=nullptr;
+		}
+	}
+	m_music.clear();
+
+	std::map<std::string,Mix_Chunk*>::iterator j;
+	for(j=m_sfxs.begin();j!=m_sfxs.end();j++){
+		if(j->second!=nullptr){
+			Mix_FreeChunk(j->second);
+			j->second=nullptr;			
+		}
+	}
+	m_sfxs.clear();
+}
