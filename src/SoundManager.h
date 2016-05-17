@@ -1,46 +1,29 @@
-//
-//  SoundManager.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 26/03/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
-
-#ifndef __SDL_Game_Programming_Book__SoundManager__
-#define __SDL_Game_Programming_Book__SoundManager__
+#ifndef SOUNDMANAGER_H_DEFINED
+#define SOUNDMANAGER_H_DEFINED
 
 #include <iostream>
 #include <map>
 #include <string>
+
 #include <SDL2/SDL_mixer.h>
 
-enum sound_type
-{
+enum sound_type {
     SOUND_MUSIC = 1,
     SOUND_SFX = 1
 };
 
-class SoundManager
-{
-public:
+class SoundManager {
     
-    static SoundManager* Instance()
-    {
-        if(s_pInstance == 0)
-        {
-            s_pInstance = new SoundManager();
-            return s_pInstance;
-        }
-        return s_pInstance;
-    }
+public:    
+    static SoundManager* Instance();
     
     bool load(std::string fileName, std::string id, sound_type type);
     
     void playSound(std::string id, int loop);
     void playMusic(std::string id, int loop);
     void clearSoundMap();
-private:
     
+private:    
     static SoundManager* s_pInstance;
     
     std::map<std::string, Mix_Chunk*> m_sfxs;
@@ -55,4 +38,4 @@ private:
 
 typedef SoundManager TheSoundManager;
 
-#endif /* defined(__SDL_Game_Programming_Book__SoundManager__) */
+#endif /* defined(SOUNDMANAGER_H_DEFINED) */

@@ -3,15 +3,13 @@
 
 #include "ShooterObject.h"
 
-#include <iostream>
-
 class PlayerBullet : public ShooterObject {
     
 public:
     PlayerBullet();    
     virtual ~PlayerBullet();    
     virtual std::string type();    
-    virtual void load(std::unique_ptr<LoaderParams> pParams, Vector2D heading);    
+    virtual void load(std::unique_ptr<LoaderParams> &pParams, Vector2D heading);    
     virtual void draw();    
     virtual void collision();    
     virtual void update();    

@@ -8,7 +8,7 @@ SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/loca
 
 SDL_INCLUDE = -isystem /usr/local/include
 
-CXXFLAGS = -Wall -c -g -Wno-reorder -std=c++11 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(SDL_INCLUDE) 
+CXXFLAGS = -Wall -c -g -Wno-reorder -std=c++14 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(SDL_INCLUDE) 
 LDFLAGS = $(SDL_LIB) -lz -ltinyxml
 
 BIN_DIR = ./bin
@@ -18,8 +18,8 @@ SOURCES = src/AnimatedGraphic.cpp src/Bullet.cpp src/BulletHandler.cpp src/Colli
 	src/Level1Boss.cpp src/LevelParser.cpp src/main.cpp src/MainMenuState.cpp \
 	src/MenuButton.cpp src/ObjectLayer.cpp src/PauseState.cpp \
 	src/PlayState.cpp src/Player.cpp src/RoofTurret.cpp src/ScrollingBackground.cpp \
-	src/ShooterObject.cpp src/SoundManager.cpp src/StateParser.cpp \
-	src/TextureManager.cpp src/TileLayer.cpp src/Turret.cpp src/base64.cpp  
+	src/ShooterObject.cpp src/ShotGlider.cpp src/SoundManager.cpp src/StateParser.cpp \
+	src/TextureManager.cpp src/TileLayer.cpp src/Turret.cpp src/Vector2D.cpp src/base64.cpp  
 
 TARGET_BIN = $(BIN_DIR)/alienattack
 

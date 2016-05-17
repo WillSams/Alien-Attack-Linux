@@ -1,14 +1,15 @@
-//
-//  SoundManager.cpp
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 26/03/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
-
 #include "SoundManager.h"
 
 SoundManager* SoundManager::s_pInstance;
+
+SoundManager* SoundManager::Instance()  {
+    if(s_pInstance == 0)
+    {
+        s_pInstance = new SoundManager();
+        return s_pInstance;
+    }
+    return s_pInstance;
+}
 
 SoundManager::SoundManager()
 {
@@ -16,11 +17,6 @@ SoundManager::SoundManager()
     {   
         std::cout << "Could not init mixer:  " << Mix_GetError() << std::endl;
     }
-    
-   /*if ( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024) ==-1)
-    {   
-        std::cout << "Could not init mixer" << Mix_GetError() << std::endl;
-    }*/
 }
 
 SoundManager::~SoundManager()
@@ -69,8 +65,7 @@ void SoundManager::playSound(std::string id, int loop)
 }
 
 void SoundManager::clearSoundMap() {
-	std::map<std::string,Mix_Music*>::iterator i;
-	for(i=m_music.begin();i!=m_music.end();i++){
+	for(auto i=m_music.begin();i!=m_music.end();i++){
 		if(i->second!=nullptr){
 			Mix_FreeMusic(i->second);
 			i->second=nullptr;
@@ -78,8 +73,7 @@ void SoundManager::clearSoundMap() {
 	}
 	m_music.clear();
 
-	std::map<std::string,Mix_Chunk*>::iterator j;
-	for(j=m_sfxs.begin();j!=m_sfxs.end();j++){
+	for(auto j=m_sfxs.begin();j!=m_sfxs.end();j++){
 		if(j->second!=nullptr){
 			Mix_FreeChunk(j->second);
 			j->second=nullptr;			

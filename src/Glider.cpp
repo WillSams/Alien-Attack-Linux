@@ -1,4 +1,5 @@
 #include "Glider.h"
+#include "Game.h"
 
 Glider::Glider() : 
 m_dyingTime(25),

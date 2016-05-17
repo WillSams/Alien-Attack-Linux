@@ -1,8 +1,10 @@
+#include <memory>
+
 #include "CollisionManager.h"
 
 const int CollisionManager::s_buffer = 4;
 
-bool CollisionManager::RectRect(SDL_Rect* A, SDL_Rect* B) {
+bool CollisionManager::RectRect(std::shared_ptr<SDL_Rect> &A, std::shared_ptr<SDL_Rect> &B) {
     int aHBuf = A->h / s_buffer;
     int aWBuf = A->w / s_buffer;
     
@@ -26,7 +28,7 @@ bool CollisionManager::RectRect(SDL_Rect* A, SDL_Rect* B) {
 }
 
 void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer) {
-    SDL_Rect* pRect1 = new SDL_Rect();
+    auto pRect1 = std::make_shared<SDL_Rect>();
     pRect1->x = pPlayer->getPosition().getX();
     pRect1->y = pPlayer->getPosition().getY();
     pRect1->w = pPlayer->getWidth();
@@ -34,9 +36,9 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer) {
     
     for(unsigned int i = 0; i < 
             TheBulletHandler::Instance()->getEnemyBullets().size(); i++) {
-        EnemyBullet* pEnemyBullet = TheBulletHandler::Instance()->getEnemyBullets()[i];
+        auto pEnemyBullet = TheBulletHandler::Instance()->getEnemyBullets()[i];
         
-        SDL_Rect* pRect2 = new SDL_Rect();
+        auto pRect2 = std::make_shared<SDL_Rect>();
         pRect2->x = pEnemyBullet->getPosition().getX();
         pRect2->y = pEnemyBullet->getPosition().getY();
         
@@ -49,17 +51,13 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer) {
                 pPlayer->collision();
             }
         }
-        
-        delete pRect2;
     }
-    
-    delete pRect1;
 }
 
 void CollisionManager::checkEnemyPlayerBulletCollision(
         const std::vector<GameObject *> &objects) {
     for(unsigned int i = 0; i < objects.size(); i++) {
-        GameObject* pObject = objects[i];
+        auto pObject = objects[i];
         
         for(unsigned int j = 0; j < 
                 TheBulletHandler::Instance()->getPlayerBullets().size(); j++) {
@@ -67,16 +65,16 @@ void CollisionManager::checkEnemyPlayerBulletCollision(
                 continue;
             }
             
-            SDL_Rect* pRect1 = new SDL_Rect();
+            auto pRect1 = std::make_shared<SDL_Rect>();
             pRect1->x = pObject->getPosition().getX();
             pRect1->y = pObject->getPosition().getY();
             pRect1->w = pObject->getWidth();
             pRect1->h = pObject->getHeight();
             
-            PlayerBullet* pPlayerBullet = TheBulletHandler::Instance()->
+            auto pPlayerBullet = TheBulletHandler::Instance()->
                 getPlayerBullets()[j];
             
-            SDL_Rect* pRect2 = new SDL_Rect();
+            auto pRect2 = std::make_shared<SDL_Rect>();
             pRect2->x = pPlayerBullet->getPosition().getX();
             pRect2->y = pPlayerBullet->getPosition().getY();
             pRect2->w = pPlayerBullet->getWidth();
@@ -87,17 +85,14 @@ void CollisionManager::checkEnemyPlayerBulletCollision(
                     pPlayerBullet->collision();
                     pObject->collision();
                 }                
-            }
-            
-            delete pRect1;
-            delete pRect2;
+            }            
         }
     }
 }
 
 void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, 
         const std::vector<GameObject*> &objects) {
-    SDL_Rect* pRect1 = new SDL_Rect();
+    auto pRect1 = std::make_shared<SDL_Rect>();
     pRect1->x = pPlayer->getPosition().getX();
     pRect1->y = pPlayer->getPosition().getY();
     pRect1->w = pPlayer->getWidth();
@@ -108,7 +103,7 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer,
             continue;
         }
         
-        SDL_Rect* pRect2 = new SDL_Rect();
+        auto pRect2 = std::make_shared<SDL_Rect>();
         pRect2->x = objects[i]->getPosition().getX();
         pRect2->y = objects[i]->getPosition().getY();
         pRect2->w = objects[i]->getWidth();
@@ -119,16 +114,12 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer,
                 pPlayer->collision();
             }
         }
-        
-        delete pRect2;
     }
-    
-    delete pRect1;
 }
 
 void CollisionManager::checkPlayerTileCollision(Player* pPlayer, 
         const std::vector<TileLayer*>& collisionLayers) {
-    for(std::vector<TileLayer*>::const_iterator it = collisionLayers.begin(); 
+    for(auto it = collisionLayers.begin(); 
             it != collisionLayers.end(); ++it) {
         TileLayer* pTileLayer = (*it);
         std::vector<std::vector<int>> tiles = pTileLayer->getTileIDs();

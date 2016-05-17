@@ -9,8 +9,10 @@
 #ifndef __SDL_Game_Programming_Book__SDLGameObject__
 #define __SDL_Game_Programming_Book__SDLGameObject__
 
-#include <SDL2/SDL.h>
+#include "TextureManager.h"
 #include "GameObject.h"
+
+#include <SDL2/SDL.h>
 
 class ShooterObject : public GameObject
 {

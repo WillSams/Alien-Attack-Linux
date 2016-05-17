@@ -4,13 +4,11 @@
 #include "GameObjectFactory.h"
 #include "ShooterObject.h"
 
-#include <iostream>
-
 class AnimatedGraphic : public ShooterObject {
     
 public:        
     AnimatedGraphic();
-    virtual ~AnimatedGraphic() {};
+    virtual ~AnimatedGraphic();
 
     virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 

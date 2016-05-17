@@ -12,7 +12,7 @@ public:
 };
 
 class RoofTurretCreator : public BaseCreator {
-    GameObject* createGameObject() const;
+    virtual GameObject* createGameObject() const;
 }; 
 
 #endif /* defined (ROOFTURRET_H_DEFINED) */

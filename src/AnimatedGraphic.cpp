@@ -5,8 +5,10 @@ AnimatedGraphic::AnimatedGraphic()
   m_frameCount(0)
 { }
 
+AnimatedGraphic::~AnimatedGraphic(){}
+
 void AnimatedGraphic::load(std::unique_ptr<LoaderParams> const &pParams) {
-    ShooterObject::load(pParams);
+    ShooterObject::load(std::move(pParams));
     m_animSpeed = pParams->getAnimSpeed();
 }
 

@@ -7,7 +7,6 @@
 //
 
 #include "ShooterObject.h"
-#include "TextureManager.h"
 #include "Game.h"
 
 ShooterObject::ShooterObject() :    GameObject(),

@@ -1,15 +1,17 @@
-//
-//  TextureManager.cpp
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 31/12/2012.
-//  Copyright (c) 2012 shaun mitchell. All rights reserved.
-//
 #include "TextureManager.h"
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL.h>
 
 TextureManager* TextureManager::s_pInstance = 0;
+
+TextureManager* TextureManager::Instance()
+    {
+        if(s_pInstance == 0)
+        {
+            s_pInstance = new TextureManager();
+            return s_pInstance;
+        }
+       
+        return s_pInstance;
+    }
 
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
 {
@@ -80,20 +82,17 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
 }
 
 void TextureManager::clearTextureMap() {
-    
-	std::map<std::string,SDL_Texture*>::iterator i;
-	for(i=m_textureMap.begin();i!=m_textureMap.end();i++){
-		if(i->second!=nullptr){			
-			SDL_DestroyTexture(i->second);
-			i->second = nullptr;
-		}
-	}
-	m_textureMap.clear();
+    for(auto i=m_textureMap.begin();i!=m_textureMap.end();i++){
+            if(i->second!=nullptr){			
+                    SDL_DestroyTexture(i->second);
+                    i->second = nullptr;
+            }
+    }
+    m_textureMap.clear();
 }
 
-void TextureManager::clearFromTextureMap(std::string id)
-{
-	SDL_DestroyTexture(m_textureMap[id]);    
-	m_textureMap.erase(id);
+void TextureManager::clearFromTextureMap(std::string id) {
+    SDL_DestroyTexture(m_textureMap[id]);    
+    m_textureMap.erase(id);
 }
 

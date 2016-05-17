@@ -3,86 +3,47 @@
 
 #include "LoaderParams.h"
 #include "Vector2D.h"
+
 #include <string>
 #include <memory>
 
-class GameObject
-{
-public:
+class GameObject {
     
-    // base class needs virtual destructor
-    virtual ~GameObject() {}
+public:    
+    virtual ~GameObject();
     
     // load from file - int x, int y, int width, int height, std::string textureID, int numFrames, int callbackID = 0, int animSpeed = 0
-    virtual void load(std::unique_ptr<LoaderParams> const &pParams)=0;
+    virtual void load(std::unique_ptr<LoaderParams> const &pParams)=0;    
     
-    // draw the object
-    virtual void draw()=0;
+    virtual void draw()=0;              // draw the object  
+    virtual void update()=0;            // do update stuff    
+    virtual void clean()=0;             // remove anything that needs to be deleted 
+    virtual void collision() = 0;       // object has collided, handle accordingly 
+    virtual std::string type() = 0;     // get the type of the object
     
-    // do update stuff
-    virtual void update()=0;
+    virtual Vector2D& getPosition();
+    virtual Vector2D& getVelocity();
     
-    // remove anything that needs to be deleted
-    virtual void clean()=0;
+    virtual int getWidth();
+    virtual int getHeight();    
     
-    // object has collided, handle accordingly
-    virtual void collision() = 0;
+    virtual void scroll(float scrollSpeed);         // scroll along with tile map
     
-    // get the type of the object
-    virtual std::string type() = 0;
-    
-    // getters for common variables
-    Vector2D& getPosition() { return m_position; }
-    Vector2D& getVelocity() { return m_velocity; }
-    
-    int getWidth() { return m_width; }
-    int getHeight() { return m_height; }
-    
-    // scroll along with tile map
-    void scroll(float scrollSpeed)
-    {
-        if(type() != std::string("Player")) // player is never scrolled
-        {
-            m_position.setX(m_position.getX() - scrollSpeed);
-        }
-    }
-    
-    // is the object currently being updated?
-    bool updating() { return m_bUpdating; }
-    
-    // is the object dead?
-    bool dead() { return m_bDead; }
-    
-    // is the object doing a death animation?
-    bool dying() { return m_bDying; }
+    virtual bool updating();
+    virtual bool dead();    
+    virtual bool dying() ;                          // is the object doing a death animation?
     
     // set whether to update the object or not
-    void setUpdating(bool updating) { m_bUpdating = updating; }
+    virtual void setUpdating(bool updating);
         
 protected:
-    
-    // constructor with default initialisation list
-    GameObject() :  m_position(0,0),
-                    m_velocity(0,0),
-                    m_acceleration(0,0),
-                    m_width(0),
-                    m_height(0),
-                    m_currentRow(0),
-                    m_currentFrame(0),
-                    m_bUpdating(false),
-                    m_bDead(false),
-                    m_bDying(false),
-                    m_angle(0),
-                    m_alpha(255)
-    {
-    }
+    GameObject();
 
     // movement variables
     Vector2D m_position;
     Vector2D m_velocity;
     Vector2D m_acceleration;
     
-    // size variables
     int m_width;
     int m_height;
     
@@ -92,16 +53,13 @@ protected:
     int m_numFrames;
     std::string m_textureID;
     
-    // common boolean variables
     bool m_bUpdating;
     bool m_bDead;
-    bool m_bDying;
+    bool m_bDying;    
     
-    // rotation
-    double m_angle;
+    double m_angle;         // rotation    
     
-    // blending
-    int m_alpha;
+    int m_alpha;            // blending
 };
 
-#endif
+#endif /* defined (GAMEOBJECT_H_DEFINED) */

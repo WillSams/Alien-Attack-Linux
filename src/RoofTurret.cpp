@@ -1,4 +1,5 @@
 #include "RoofTurret.h"
+#include "Game.h"
 
 RoofTurret::~RoofTurret() {}
     

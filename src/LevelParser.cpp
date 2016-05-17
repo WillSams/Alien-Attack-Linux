@@ -41,7 +41,7 @@ Level* LevelParser::parseLevel(const char *levelFile)
     TiXmlElement* pProperties = pRoot->FirstChildElement();
     
     // we must parse the textures needed for this level, which have been added to properties
-    for(TiXmlElement* e = pProperties->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    for(auto e = pProperties->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
     {
         if(e->Value() == std::string("property"))
         {
@@ -50,7 +50,7 @@ Level* LevelParser::parseLevel(const char *levelFile)
     }
     
     // we must now parse the tilesets
-    for(TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    for(auto e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
     {
         if(e->Value() == std::string("tileset"))
         {
@@ -59,7 +59,7 @@ Level* LevelParser::parseLevel(const char *levelFile)
     }
     
     // parse any object layers
-    for(TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    for(auto e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
     {
         if(e->Value() == std::string("objectgroup") || e->Value() == std::string("layer"))
         {
@@ -113,7 +113,7 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
     // create an object layer
     ObjectLayer* pObjectLayer = new ObjectLayer();
     
-    for(TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    for(auto e = pObjectElement->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
     {
         if(e->Value() == std::string("object"))
         {
@@ -129,11 +129,11 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
             GameObject* pGameObject = TheGameObjectFactory::Instance()->create(type);
             
             // get the property values
-            for(TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
+            for(auto properties = e->FirstChildElement(); properties != nullptr; properties = properties->NextSiblingElement())
             {
                 if(properties->Value() == std::string("properties"))
                 {
-                    for(TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+                    for(auto property = properties->FirstChildElement(); property != nullptr; property = property->NextSiblingElement())
                     {
                         if(property->Value() == std::string("property"))
                         {
@@ -193,11 +193,11 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
     std::string decodedIDs;
     TiXmlElement* pDataNode;
     
-    for(TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    for(auto e = pTileElement->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
     {
         if(e->Value() == std::string("properties"))
         {
-            for(TiXmlElement* property = e->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+            for(auto property = e->FirstChildElement(); property != nullptr; property = property->NextSiblingElement())
             {
                 if(property->Value() == std::string("property"))
                 {
@@ -215,7 +215,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
         }
     }
     
-    for(TiXmlNode* e = pDataNode->FirstChild(); e != NULL; e = e->NextSibling())
+    for(TiXmlNode* e = pDataNode->FirstChild(); e != nullptr; e = e->NextSibling())
     {
         TiXmlText* text = e->ToText();
         std::string t = text->Value();

@@ -1,33 +1,17 @@
-//
-//  TextureManager.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 31/12/2012.
-//  Copyright (c) 2012 shaun mitchell. All rights reserved.
-//
-
-#ifndef __TextureManager__
-#define __TextureManager__
+#ifndef TEXTUREMANAGER_H_DEFINED
+#define TEXTUREMANAGER_H_DEFINED
 
 #include <iostream>
 #include <string>
 #include <map>
+
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 
-class TextureManager
-{
-public:
+class TextureManager {
     
-    static TextureManager* Instance()
-    {
-        if(s_pInstance == 0)
-        {
-            s_pInstance = new TextureManager();
-            return s_pInstance;
-        }
-       
-        return s_pInstance;
-    }
+public:    
+    static TextureManager* Instance();
     
     bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer);
     

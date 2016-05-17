@@ -22,8 +22,8 @@ public:
     
     void clearBullets();
     
-    const std::vector<PlayerBullet*> getPlayerBullets();
-    const std::vector<EnemyBullet*> getEnemyBullets();
+    const std::vector<std::shared_ptr<PlayerBullet>> getPlayerBullets();
+    const std::vector<std::shared_ptr<EnemyBullet>> getEnemyBullets();
     
 private:    
     BulletHandler();
@@ -35,8 +35,8 @@ private:
     static BulletHandler* s_pInstance;
     
     // in play bullets
-    std::vector<PlayerBullet*> m_playerBullets;
-    std::vector<EnemyBullet*> m_enemyBullets;
+    std::vector<std::shared_ptr<PlayerBullet>> m_playerBullets;
+    std::vector<std::shared_ptr<EnemyBullet>> m_enemyBullets;
 };
 
 typedef BulletHandler TheBulletHandler;

@@ -3,6 +3,7 @@
 
 #include "GameObjectFactory.h"
 #include "SoundManager.h"
+#include "TextureManager.h"
 #include "Enemy.h"
 
 #include <iostream>
@@ -29,7 +30,7 @@ private:
 };
 
 class GliderCreator : public BaseCreator {
-    GameObject* createGameObject() const;
+    virtual GameObject* createGameObject() const;
 };
 
 #endif /* defined(GLIDER_H_DEFINED) */

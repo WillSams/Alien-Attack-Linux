@@ -3,6 +3,7 @@
 
 #include "GameObjectFactory.h"
 #include "SoundManager.h"
+#include "TextureManager.h"
 #include "Enemy.h"
 
 #include <iostream>

@@ -8,16 +8,12 @@
 #include <iostream>
 #include <vector>
 
-class Player;
-class GameObject;
-class TileLayer;
-
 class CollisionManager {
     
 public:    
     const static int s_buffer;
 
-    static bool RectRect(SDL_Rect* A, SDL_Rect* B);
+    static bool RectRect(std::shared_ptr<SDL_Rect> &A, std::shared_ptr<SDL_Rect> &B);
     
     void checkPlayerEnemyBulletCollision(Player* pPlayer);
     void checkPlayerEnemyCollision(Player* pPlayer, 

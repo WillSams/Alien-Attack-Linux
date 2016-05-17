@@ -18,11 +18,9 @@ public:
         int m_moveSpeed;
 };
 
-class ShotGliderCreator : public BaseCreator
-{
+class ShotGliderCreator : public BaseCreator {
     
 public:
     virtual GameObject* createGameObject() const;
 };
-
 #endif /* defined(SHOTGLIDER_H_DEFINED) */

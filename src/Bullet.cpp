@@ -1,16 +1,15 @@
 #include "Bullet.h"
 
-PlayerBullet::PlayerBullet() : ShooterObject() { m_dyingTime = 5; }
-    
+PlayerBullet::PlayerBullet() { m_dyingTime =5; }    
 PlayerBullet::~PlayerBullet() {}
     
 std::string PlayerBullet::type() { return "PlayerBullet"; }
     
-void PlayerBullet::load(std::unique_ptr<LoaderParams> pParams, Vector2D heading) {
+void PlayerBullet::load(std::unique_ptr<LoaderParams> &pParams, Vector2D heading) {
     ShooterObject::load(std::move(pParams));
     m_heading = heading;
 }
-    
+
 void PlayerBullet::draw() { ShooterObject::draw(); }
     
 void PlayerBullet::collision() {
