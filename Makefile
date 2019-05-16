@@ -34,8 +34,11 @@ install:
 	cp  alienattack.6 $(MAN_PREFIX)/man/man6/
 	chmod a+rx,g-w,o-w $(MAN_PREFIX)/man/man6/alienattack.6 
 
-make_dirs :
+make_dirs:
 	mkdir -p $(BIN_DIR)
+	
+run:
+	./bin/alienattack
 	
 check:
 	valgrind --log-file=valgrind.output --leak-check=yes --tool=memcheck $(TARGET)
