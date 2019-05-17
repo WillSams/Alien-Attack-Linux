@@ -22,8 +22,8 @@ Game::Game():
     m_bChangingState(false) {
     
     // add some level files to an array
-    m_levelFiles.push_back("data/gfx/map1.tmx");
-    m_levelFiles.push_back("data/gfx/map2.tmx");
+    m_levelFiles.push_back("gfx/map1.tmx");
+    m_levelFiles.push_back("gfx/map2.tmx");
     
     // start at this level
     m_currentLevel = 1;

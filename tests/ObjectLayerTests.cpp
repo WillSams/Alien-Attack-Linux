@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../src/ObjectLayer.cpp"
+#include "../src/ObjectLayer.h"
 
 TEST(DISABLED_ObjectLayerTests, testUpdate) {}
 

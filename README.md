@@ -10,22 +10,16 @@ Including image, ttf, and mixer extensions.  Please see my [gist explaining how 
     sudo apt-get install libtinyxml-dev
     sudo apt-get install tiled  #for the .tmx files
 
-### Testing supports w/Google-Test 
-TODO: Writing integration tests to assist with code changes.
-
-    sudo apt-get install libgtest-dev
-    cd /usr/src/gtest
-    sudo cmake CMakeLists.txt
-    sudo make
-    sudo cp *.a /usr/lib  # copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
-
-    #download Google Mock (http://code.google.com/p/googlemock/downloads/list) and extract contents to /usr/src
-    cd /usr/src/gmock*
-    sudo cmake CMakeLists.txt
-    sudo make
-    sudo cp *.a /usr/lib
+### Testing support w/Google-Test
+    git clone https://github.com/google/googletest /tmp/googletest
+    cd /tmp/googletest && cmake . && make
+    sudo bash -c "make install"
+    rm -rf /tmp/googletest
+    
+If you don't have SDL, Valgrind, or Google Test installed, try [this][4] script.
     
     
 [1]: https://gist.github.com/WillSams/e2bb2874ace22b90f90f
 [2]: https://www.packtpub.com/game-development/sdl-game-development
 [3]: http://www.mapeditor.org/
+[4]: https://gist.github.com/WillSams/e2bb2874ace22b90f90f
