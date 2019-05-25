@@ -1,10 +1,10 @@
 BIN 					= alienattack
+BIN_DIR   		= $(CURDIR)/bin
 TARGET 				= $(BIN_DIR)/$(BIN)
 TESTS-TARGET 	= $(BIN_DIR)/game-tests
-
+HOMEUSER			=	$(if $(SUDO_USER),$(SUDO_USER),$(USER))
+DATA_PREFIX		=	/home/$(HOMEUSER)/.$(BIN)/
 LOCAL 				=	/usr/local
-HOME   				= $(if $(SUDO_USER),$(SUDO_USER),$(USER))
-DATA_PREFIX		=	/home/$(HOME)/.$(BIN)/
 
 XX = g++
 LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/local/lib
@@ -13,7 +13,6 @@ INCLUDE = -isystem -I/usr/local/include
 CXXFLAGS = -Wall -c -g -Wno-reorder -std=c++14 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(INCLUDE) 
 LDFLAGS = $(LIB) -lz -ltinyxml
 
-BIN_DIR   = $(CURDIR)/bin
 SRCS      = $(wildcard src/*.cpp)
 SRCS     	+= main.cpp
 OBJS      = $(SRCS:.cpp=.o)
@@ -43,7 +42,7 @@ clean-tests:
 tests-target: $(TESTOBJS)
 	$(CXX) $^ $(LDFLAGS) -lgtest -lgmock -pthread -o $(TESTS-TARGET)
 	
-#execute with elevated priveleges.  Run make make_dirs as non-elevate users before
+#execute with elevated priveleges. 
 install:
 	mkdir -p $(DATA_PREFIX)
 	install -d $(DATA_PREFIX)
@@ -53,10 +52,10 @@ install:
 	cp $(TARGET) $(LOCAL)/bin
 	chmod a+rx,g-w,o-w $(LOCAL)/bin/$(BIN)
 
+#execute with elevated priveleges. 
 uninstall:
-	-rm -r $(DATA_PREFIX)
-	-rm $(PREFIX)/bin/defendguin
-	-rm $(PREFIX)/man/man6/defendguin.6
+	-rm -rf $(DATA_PREFIX)
+	-rm $(LOCAL)/bin/$(BIN)
 	
 check:
 	valgrind --log-file=valgrind.output --leak-check=yes --tool=memcheck $(TARGET)

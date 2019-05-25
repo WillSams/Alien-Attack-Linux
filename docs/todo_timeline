@@ -1,0 +1,8 @@
+********** Building on Shaun Mitchell's original Alien Attack ***********
+* (May 19-June 29): Do design document, tweak the engine, add menus
+* (June 30-August 10): Add boss at level 1
+* (Aug 11-Sep 20): Add power ups
+* (Sep 21-Nov 2): Add level 2, 3, 4, 5 maps
+* (Nov 3-Dec 14): Add boss 2, 3, 4, 5
+* (Dec 15-Jan 25): Add boss 2, 3, 4, 5
+* (Jan 26-Mar 7): Clean up the code to complete the re-usable engine.
