@@ -16,6 +16,7 @@ TextureManager* TextureManager::Instance()
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
 {
     fileName = DATA_PREFIX "gfx/" + fileName;
+    std::cout << "Texture filename - " << fileName << std::endl;
     SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
     
     if(pTempSurface == 0)

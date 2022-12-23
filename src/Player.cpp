@@ -175,7 +175,7 @@ void Player::handleInput() {
         /* handle joysticks */
         //Check for joysticks
         if( SDL_NumJoysticks() < 1 ) { 
-            printf( "Warning: No joysticks connected!\n" );
+           // printf( "Warning: No joysticks connected!\n" );
         } else { 
             if(TheInputHandler::Instance()->joysticksInitialised()) {
                 if(TheInputHandler::Instance()->getButtonState(0, 2)) {

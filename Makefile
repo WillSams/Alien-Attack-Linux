@@ -1,16 +1,17 @@
-BIN 					= alienattack
+BIN 			= alienattack
 BIN_DIR   		= $(CURDIR)/bin
-TARGET 				= $(BIN_DIR)/$(BIN)
+TARGET 			= $(BIN_DIR)/$(BIN)
 TESTS-TARGET 	= $(BIN_DIR)/game-tests
-HOMEUSER			=	$(if $(SUDO_USER),$(SUDO_USER),$(USER))
-DATA_PREFIX		=	/home/$(HOMEUSER)/.$(BIN)/
-LOCAL 				=	/usr/local
+HOMEUSER		= $(if $(SUDO_USER),$(SUDO_USER),$(USER))
+DATA_PREFIX		= $(PWD)/data/
+LOCAL 			=	/usr/local
 
 XX = g++
 LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/local/lib
 INCLUDE = -isystem -I/usr/local/include
 
-CXXFLAGS = -Wall -c -g -Wno-reorder -std=c++14 -DDATA_PREFIX=\"$(DATA_PREFIX)\" $(INCLUDE) 
+CXXFLAGS = -Wall -c -g -std=c++14 -DDATA_PREFIX=\"$(DATA_PREFIX)\" \
+	-Wno-reorder -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function  $(INCLUDE) 
 LDFLAGS = $(LIB) -lz -ltinyxml
 
 SRCS      = $(wildcard src/*.cpp)
@@ -44,6 +45,7 @@ tests-target: $(TESTOBJS)
 	
 #execute with elevated priveleges. 
 install:
+	DATA_PREFIX = /home/$(HOMEUSER)/.$(BIN)/
 	mkdir -p $(DATA_PREFIX)
 	install -d $(DATA_PREFIX)
 	cp -R data/* $(DATA_PREFIX)
