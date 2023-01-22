@@ -1,70 +1,51 @@
-BIN 			= alienattack
-BIN_DIR   		= $(CURDIR)/bin
+#!/bin/sh
+
+BIN	        = alien-attack
+BIN_DIR     = ./bin
 TARGET 			= $(BIN_DIR)/$(BIN)
-TESTS-TARGET 	= $(BIN_DIR)/game-tests
-HOMEUSER		= $(if $(SUDO_USER),$(SUDO_USER),$(USER))
-DATA_PREFIX		= $(PWD)/data/
-LOCAL 			=	/usr/local
+TESTTARGET  = $(BIN_DIR)/test-$(BIN)
+DATA_PREFIX = ./data/
 
-XX = g++
-LIB = -L/usr/local/lib -lSDL2 -lSDL2_mixer -lSDL2_image -Wl,-rpath=/usr/local/lib
+CC = g++
+LIB = -L/usr/local/lib -Wl,-rpath=/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lz -ltinyxml
 INCLUDE = -isystem -I/usr/local/include
-
-CXXFLAGS = -Wall -c -g -std=c++14 -DDATA_PREFIX=\"$(DATA_PREFIX)\" \
+CCFLAGS = -Wall -c -g -std=c++17 -DDATA_PREFIX=\"$(DATA_PREFIX)\" \
 	-Wno-reorder -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function  $(INCLUDE) 
-LDFLAGS = $(LIB) -lz -ltinyxml
 
-SRCS      = $(wildcard src/*.cpp)
-SRCS     	+= main.cpp
-OBJS      = $(SRCS:.cpp=.o)
-TESTSRCS  = $(wildcard tests/*.cpp)
-TESTSRCS  += $(wildcard src/*.cpp)
-TESTOBJS  = $(TESTSRCS:.cpp=.o)
+SRCS	= $(wildcard src/**/*.cpp)
+SRCS	+= $(wildcard src/*.cpp)
+SRCS	+= ./main.cpp
+OBJS 	= $(SRCS:.cpp=.o)
 
-all : clean make_dirs $(TARGET)
+all: clean  $(TARGET)
 
 clean:
-	rm -f bin/* && rm -f $(shell find . -name '*.o') 
-	
-make_dirs:
-	mkdir -p $(BIN_DIR) $(DATA_PREFIX)
-
-$(TARGET) : $(OBJS)
-	$(CXX) $^ $(LDFLAGS) -o $@
-
-.cpp.o: 
-	$(CXX) $(CXXFLAGS) $< -o $@
-
-tests: clean-tests tests-target
-
-clean-tests:
-	rm -f bin/game-tests tests/*.o
-
-tests-target: $(TESTOBJS)
-	$(CXX) $^ $(LDFLAGS) -lgtest -lgmock -pthread -o $(TESTS-TARGET)
-	
-#execute with elevated priveleges. 
-install:
-	DATA_PREFIX = /home/$(HOMEUSER)/.$(BIN)/
-	mkdir -p $(DATA_PREFIX)
-	install -d $(DATA_PREFIX)
-	cp -R data/* $(DATA_PREFIX)
-	chmod -R a+rX,g-w,o-w $(DATA_PREFIX)
-	chown -hR $(USER):$(USER) $(DATA_PREFIX)
-	cp $(TARGET) $(LOCAL)/bin
-	chmod a+rx,g-w,o-w $(LOCAL)/bin/$(BIN)
-
-#execute with elevated priveleges. 
-uninstall:
-	-rm -rf $(DATA_PREFIX)
-	-rm $(LOCAL)/bin/$(BIN)
-	
-check:
-	valgrind --log-file=valgrind.output --leak-check=yes --tool=memcheck $(TARGET)
+	rm -f $(BIN_DIR)/* && rm -f $(shell find . -name "*.o")
 
 run:
 	$(TARGET)
-
-run-tests:
-	$(TESTS-TARGET)
 	
+test: test-target
+
+.cpp.o: 
+	$(CC) $(CCFLAGS) $< -o $@
+
+$(TARGET) : $(OBJS)
+	mkdir -p $(BIN_DIR)
+	$(CC) $^ $(LIB) -o $@
+	
+memcheck:
+	valgrind --log-file=valgrind.output --leak-check=yes --tool=memcheck $(TARGET)
+
+TESTRCS  = $(wildcard specs/*.cpp)
+TESTRCS  += $(wildcard src/*.cpp)
+TESTOBJS  = $(TESTRCS:.cpp=.o)
+	
+test: test-target
+
+run-test:
+	$(TESTTARGET)
+
+test-target: $(TESTOBJS)
+	mkdir -p $(BIN_DIR)
+	$(CC) $^ $(LIB) -lgtest -lgmock -pthread -o $(TESTTARGET)
