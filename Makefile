@@ -4,7 +4,7 @@ BIN	        = alien-attack
 BIN_DIR     = ./bin
 TARGET 			= $(BIN_DIR)/$(BIN)
 TESTTARGET  = $(BIN_DIR)/test-$(BIN)
-DATA_PREFIX = ./data/
+DATA_PREFIX = ./assets/
 
 CC = g++
 LIB = -L/usr/local/lib -Wl,-rpath=/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lz -ltinyxml
