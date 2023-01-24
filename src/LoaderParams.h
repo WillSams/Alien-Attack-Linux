@@ -1,13 +1,4 @@
-//
-//  LoaderParams.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 19/01/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
-
-#ifndef SDL_Game_Programming_Book_LoaderParams_h
-#define SDL_Game_Programming_Book_LoaderParams_h
+#pragma once
 
 #include <string>
 
@@ -53,5 +44,3 @@ private:
     
     int m_numFrames;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef ANIMATEDGRAPHIC_H_DEFINED
-#define ANIMATEDGRAPHIC_H_DEFINED
+#pragma once
 
 #include "GameObjectFactory.h"
 #include "ShooterObject.h"
@@ -26,5 +25,3 @@ class AnimatedGraphicCreator : public BaseCreator {
 public:    
     virtual GameObject* createGameObject() const;
 };
-
-#endif /* defined(ANIMATEDGRAPHIC_H_DEFINED) */
