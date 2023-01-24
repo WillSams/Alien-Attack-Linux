@@ -1,21 +1,20 @@
 #ifndef GAME_H_DEFINED
 #define GAME_H_DEFINED
 
-#include "TextureManager.h"
-#include "InputHandler.h"
-#include "MainMenuState.h"
-#include "GameObjectFactory.h"
-#include "MenuButton.h"
-#include "AnimatedGraphic.h"
-#include "Player.h"
-#include "ScrollingBackground.h"
-#include "SoundManager.h"
-#include "RoofTurret.h"
-#include "ShotGlider.h"
 #include "Eskeletor.h"
-#include "Level1Boss.h"
+#include "GameObjectFactory.h"
 #include "GameOverState.h"
 #include "GameStateMachine.h"
+#include "InputHandler.h"
+#include "Level1Boss.h"
+#include "MainMenuState.h"
+#include "MenuButton.h"
+#include "Player.h"
+#include "RoofTurret.h"
+#include "ScrollingBackground.h"
+#include "ShotGlider.h"
+#include "SoundManager.h"
+#include "TextureManager.h"
 
 #include <iostream>
 #include <vector>
@@ -24,77 +23,77 @@
 #include <SDL2/SDL_mixer.h>
 
 class Game {
-    private:
-        bool m_bChangingState;
+private:
+  bool m_bChangingState;
 
-        SDL_Window* m_pWindow;
-        SDL_Renderer* m_pRenderer;
+  SDL_Window *m_pWindow;
+  SDL_Renderer *m_pRenderer;
 
-        GameStateMachine* m_pGameStateMachine;
+  GameStateMachine *m_pGameStateMachine;
 
-        bool m_bRunning;
+  bool m_bRunning;
 
-        static Game* s_pInstance;
+  static Game *s_pInstance;
 
-        int m_gameWidth;
-        int m_gameHeight;
-        float m_scrollSpeed;
+  int m_gameWidth;
+  int m_gameHeight;
+  float m_scrollSpeed;
 
-        int m_playerLives;
+  int m_playerLives;
 
-        int m_currentLevel;
-        int m_nextLevel;
-        bool m_bLevelComplete;
+  int m_currentLevel;
+  int m_nextLevel;
+  bool m_bLevelComplete;
 
-        std::vector<std::string> m_levelFiles;
- 
-    public:    
-        static Game* Instance();
+  std::vector<std::string> m_levelFiles;
 
-        SDL_Renderer* getRenderer() const;
-        SDL_Window* getWindow() const;
-        GameStateMachine* getStateMachine();
+public:
+  static Game *Instance();
 
-        void setPlayerLives(int lives);
-        int getPlayerLives();
+  SDL_Renderer *getRenderer() const;
+  SDL_Window *getWindow() const;
+  GameStateMachine *getStateMachine();
 
-        void setCurrentLevel(int currentLevel);
-        const int getCurrentLevel();
+  void setPlayerLives(int lives);
+  int getPlayerLives();
 
-        void setNextLevel(int nextLevel);
-        const int getNextLevel();
+  void setCurrentLevel(int currentLevel);
+  const int getCurrentLevel();
 
-        void setLevelComplete(bool levelComplete);
-        const bool getLevelComplete();
+  void setNextLevel(int nextLevel);
+  const int getNextLevel();
 
-        bool running();
-        void quit();
+  void setLevelComplete(bool levelComplete);
+  const bool getLevelComplete();
 
-        int getGameWidth() const;
-        int getGameHeight() const;
-        float getScrollSpeed();
+  bool running();
+  void quit();
 
-        bool changingState();
-        void changingState(bool cs);
+  int getGameWidth() const;
+  int getGameHeight() const;
+  float getScrollSpeed();
 
-        std::vector<std::string> getLevelFiles();
-    
-    
-    //member functions
-    private:    
-        Game();
-        ~Game();
+  bool changingState();
+  void changingState(bool cs);
 
-        Game(const Game&);
-        Game& operator=(const Game&);
+  std::vector<std::string> getLevelFiles();
 
-    public:    
-        bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+  // member functions
+private:
+  Game();
+  ~Game();
 
-        void render();
-        void update();
-        void handleEvents();
-        void clean();
+  Game(const Game &);
+  Game &operator=(const Game &);
+
+public:
+  bool init(const char *title, int xpos, int ypos, int width, int height,
+            bool fullscreen);
+
+  void render();
+  void update();
+  void handleEvents();
+  void clean();
 };
 
 typedef Game TheGame;

@@ -5,7 +5,7 @@
             "name": "gccbuild and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/alienattack",
+            "program": "${workspaceFolder}/bin/alien-attack",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
