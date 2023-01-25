@@ -26,6 +26,18 @@ public:
   MOCK_METHOD0(clean, void());
 };
 
+class MockEnemyBullet : public EnemyBullet {
+public:
+  virtual ~MockEnemyBullet() {}
+
+  MOCK_METHOD0(type, std::string());
+  MOCK_METHOD2(load, void(LoaderParams *pParams, Vector2D heading));
+  MOCK_METHOD0(draw, void());
+  MOCK_METHOD0(collision, void());
+  MOCK_METHOD0(update, void());
+  MOCK_METHOD0(clean, void());
+};
+
 #include "../src/LoaderParams.h"
 class MockLoaderParams : public LoaderParams {
 public:
@@ -67,6 +79,48 @@ public:
   MOCK_METHOD0(render, void());
   MOCK_METHOD0(update, void());
   MOCK_METHOD0(handleEvents, void());
+  MOCK_METHOD0(clean, void());
+};
+
+#include "../src/GameObject.h"
+
+class MockGameObject : public GameObject {
+public:
+  virtual ~MockGameObject() {}
+
+  MOCK_METHOD0(type, std::string());
+  MOCK_METHOD2(load, void(LoaderParams *pParams, Vector2D heading));
+  MOCK_METHOD0(draw, void());
+  MOCK_METHOD0(collision, void());
+  MOCK_METHOD0(update, void());
+  MOCK_METHOD0(clean, void());
+};
+
+#include "../src/Enemy.h"
+
+class MockEnemy : public Enemy {
+public:
+  virtual ~MockEnemy() {}
+
+  MOCK_METHOD0(type, std::string());
+  MOCK_METHOD2(load, void(LoaderParams *pParams, Vector2D heading));
+  MOCK_METHOD0(draw, void());
+  MOCK_METHOD0(collision, void());
+  MOCK_METHOD0(update, void());
+  MOCK_METHOD0(clean, void());
+};
+
+#include "../src/Player.h"
+
+class MockPlayer : public Player {
+public:
+  virtual ~MockPlayer() {}
+
+  MOCK_METHOD0(type, std::string());
+  MOCK_METHOD2(load, void(LoaderParams *pParams, Vector2D heading));
+  MOCK_METHOD0(draw, void());
+  MOCK_METHOD0(collision, void());
+  MOCK_METHOD0(update, void());
   MOCK_METHOD0(clean, void());
 };
 
