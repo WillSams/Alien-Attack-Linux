@@ -6,92 +6,82 @@
 //  Copyright (c) 2013 shaun mitchell. All rights reserved.
 //
 
-#include <iostream>
 #include "PlayState.h"
-#include "GameOverState.h"
-#include "PauseState.h"
-#include "Game.h"
-#include "InputHandler.h"
-#include "LevelParser.h"
-#include "Level.h"
 #include "BulletHandler.h"
+#include "Game.h"
+#include "GameOverState.h"
+#include "InputHandler.h"
+#include "Level.h"
+#include "LevelParser.h"
+#include "PauseState.h"
+#include <iostream>
 
 const std::string PlayState::s_playID = "PLAY";
 
-void PlayState::update()
-{
-    if(m_loadingComplete && !m_exiting)
-    {
-        if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
-        {
-            TheGame::Instance()->getStateMachine()->pushState(new PauseState());
-        }
-        
-//        if(TheInputHandler::Instance()->getButtonState(0, 8))
-//        {
-//            TheGame::Instance()->getStateMachine()->pushState(new PauseState());
-//        }
-        
-        TheBulletHandler::Instance()->updateBullets();
-        
-        if(TheGame::Instance()->getPlayerLives() == 0)
-        {
-            TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
-        }
-        
-        if(pLevel != 0)
-        {
-            pLevel->update();
-        }
+void PlayState::update() {
+  if (m_loadingComplete && !m_exiting) {
+    if (inputHandler->isKeyDown(SDL_SCANCODE_ESCAPE)) {
+      game->getStateMachine()->pushState(new PauseState());
     }
+
+    //        if(inputHandler->getButtonState(0, 8))
+    //        {
+    //            game->getStateMachine()->pushState(new PauseState());
+    //        }
+
+    TheBulletHandler::Instance()->updateBullets();
+
+    if (game->getPlayerLives() == 0) {
+      game->getStateMachine()->changeState(new GameOverState());
+    }
+
+    if (pLevel != 0) {
+      pLevel->update();
+    }
+  }
 }
 
-void PlayState::render()
-{
-    if(m_loadingComplete)
-    {
-        if(pLevel != 0)
-        {
-            pLevel->render();
-        }
-        
-        for(int i = 0; i < TheGame::Instance()->getPlayerLives(); i++)
-        {
-            TheTextureManager::Instance()->drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance()->getRenderer(), 0.0, 255);
-        }
-        
-        TheBulletHandler::Instance()->drawBullets();
+void PlayState::render() {
+  if (m_loadingComplete) {
+    if (pLevel != 0) {
+      pLevel->render();
     }
+
+    for (int i = 0; i < game->getPlayerLives(); i++) {
+      textureManager->drawFrame("lives", i * 30, 0, 32, 30, 0, 0,
+                                game->getRenderer(), 0.0, 255);
+    }
+
+    TheBulletHandler::Instance()->drawBullets();
+  }
 }
 
-bool PlayState::onEnter()
-{
-    TheGame::Instance()->setPlayerLives(3);
-    
-    LevelParser levelParser;
-    pLevel = levelParser.parseLevel(TheGame::Instance()->getLevelFiles()[TheGame::Instance()->getCurrentLevel() - 1].c_str());
-    
-    TheTextureManager::Instance()->load("bullet1.png", "bullet1", TheGame::Instance()->getRenderer());
-    TheTextureManager::Instance()->load("bullet2.png", "bullet2", TheGame::Instance()->getRenderer());
-    TheTextureManager::Instance()->load("bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
-    TheTextureManager::Instance()->load("lives.png", "lives", TheGame::Instance()->getRenderer());
-    
-    if(pLevel != 0)
-    {
-        m_loadingComplete = true;
-    }
-    
-    std::cout << "entering PlayState\n";
-    return true;
+bool PlayState::onEnter() {
+  game->setPlayerLives(3);
+
+  LevelParser levelParser;
+  pLevel = levelParser.parseLevel(
+      game->getLevelFiles()[game->getCurrentLevel() - 1].c_str());
+
+  textureManager->load("bullet1.png", "bullet1", game->getRenderer());
+  textureManager->load("bullet2.png", "bullet2", game->getRenderer());
+  textureManager->load("bullet3.png", "bullet3", game->getRenderer());
+  textureManager->load("lives.png", "lives", game->getRenderer());
+
+  if (pLevel != 0) {
+    m_loadingComplete = true;
+  }
+
+  std::cout << "entering PlayState\n";
+  return true;
 }
 
-bool PlayState::onExit()
-{
-    m_exiting = true;
-    
-    TheInputHandler::Instance()->reset();
-    TheBulletHandler::Instance()->clearBullets();
-    
-    std::cout << "exiting PlayState\n";
-    return true;
+bool PlayState::onExit() {
+  m_exiting = true;
+
+  inputHandler->reset();
+  TheBulletHandler::Instance()->clearBullets();
+
+  std::cout << "exiting PlayState\n";
+  return true;
 }

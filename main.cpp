@@ -6,20 +6,22 @@ const unsigned int DELAY_TIME = 1000.0f / FPS;
 
 int main(int argc, char **argv) {
   Uint32 frameStart, frameTime;
-  
+
+  std::shared_ptr<Game> game = std::make_shared<Game>();
+
   std::cout << "game init attempt...\n";
-  if(TheGame::Instance()->init("Alien Attack", 100, 100, 640, 480, false)) {
-    std::cout << "game init success!\n";        
-    while(TheGame::Instance()->running()) {
+  if (game->init("Alien Attack", 100, 100, 640, 480, false)) {
+    std::cout << "game init success!\n";
+    while (game->running()) {
       frameStart = SDL_GetTicks();
-      
-      TheGame::Instance()->handleEvents();
-      TheGame::Instance()->update();
-      TheGame::Instance()->render();
-      
+
+      game->handleEvents();
+      game->update();
+      game->render();
+
       frameTime = SDL_GetTicks() - frameStart;
-      
-      if(frameTime < DELAY_TIME) {
+
+      if (frameTime < DELAY_TIME) {
         SDL_Delay((int)(DELAY_TIME - frameTime));
       }
     }
@@ -27,9 +29,9 @@ int main(int argc, char **argv) {
     std::cout << "game init failure - " << SDL_GetError() << "\n";
     return -1;
   }
-  
+
   std::cout << "game closing...\n";
-  TheGame::Instance()->clean();
-  
+  game->clean();
+
   return 0;
 }

@@ -18,11 +18,11 @@
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::s_gameOverToMain() {
-  TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+  game->getStateMachine()->changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay() {
-  TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+  game->getStateMachine()->changeState(new PlayState());
 }
 
 void GameOverState::update() {
@@ -74,10 +74,10 @@ bool GameOverState::onExit() {
 
   // clear the texture manager
   for (unsigned int i = 0; i < m_textureIDList.size(); i++) {
-    TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+    textureManager->clearFromTextureMap(m_textureIDList[i]);
   }
 
-  TheInputHandler::Instance()->reset();
+  inputHandler->reset();
 
   std::cout << "exiting GameOverState\n";
   return true;

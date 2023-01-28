@@ -16,17 +16,18 @@ In addition to the above:
 
 ## Pre-requisites
 
-I've included a Makefile that should work on most Linux systems, including Windows Subsystem for Linux and possibly for MacOS.  You'll need to install SDL2 and the SDL2 image, ttf, and mixer extensions.  To install these extensions on a Debian based system, you can follow [these instructions][4].  If you're on a different system, you'll need to install the SDL2 and extensions [per the instructions for your system][5].  If you already have SDL2 and extensions installed, only steps you need is to install [Tiled][6], [Valgrind][7], and [Google Test][8] if you don't have those already.  On Debian-based systems, you can do the following:
+I've included a Makefile that should work on most Linux systems, including Windows Subsystem for Linux and possibly for MacOS.  You'll need to install SDL2 and the SDL2 image, ttf, and mixer extensions.  To install these extensions on a Debian based system, you can follow [these instructions][4].  If you're on a different system, you'll need to install the SDL2 and extensions [per the instructions for your system][5].  If you already have SDL2 and extensions installed, only steps you need is to install [Tiled][6], [Valgrind][7], and [Igloo][8] if you don't have those already.  On Debian-based systems, you can do the following:
 
 ```bash
 sudo update && sudo apt install cmake llibtinyxml-dev tiled valgrind
 
-BUILD_DIR=~/build-sdl2
-mkdir -p $BUILDDIR && cd $_
-git clone https://github.com/google/googletest cd $BUILDDIR/googletest
-cd googletest && cmake .
-make && sudo make install
-rm -rf $BUILDDIR
+git clone https://github.com/codewars/igloo.git
+cd igloo
+git submodule add -b headers-only https://github.com/banditcpp/snowhouse snowhouse
+git submodule update --init --recursive
+mkdir build && cd build
+cmake ..
+sudo cmake --build .. --target install
 ```
 
 I'll update these instructions for WSL and MacOS, eventually.  However, if anyone wants to submit a PR for these, I'd be happy to accept it.
@@ -42,6 +43,6 @@ Just simply type `make && make run` to build and run the game.
 [5]: https://wiki.libsdl.org/SDL2/Installation
 [6]: http://www.mapeditor.org/
 [7]: http://valgrind.org/
-[8]: https://google.github.io/googletest/
+[8]: https://github.com/codewars/igloo
 [9]: https://switchbrew.org/wiki/Setting_up_Development_Environment
 [10]: docs/memory-management.md

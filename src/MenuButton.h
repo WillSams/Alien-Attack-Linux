@@ -1,48 +1,35 @@
-//
-//  MenuObject.h
-//  SDL Game Programming Book
-//
-//  Created by shaun mitchell on 10/02/2013.
-//  Copyright (c) 2013 shaun mitchell. All rights reserved.
-//
+#pragma once
 
-#ifndef __SDL_Game_Programming_Book__MenuObject__
-#define __SDL_Game_Programming_Book__MenuObject__
-
-#include "ShooterObject.h"
 #include "GameObjectFactory.h"
+#include "ShooterObject.h"
 
 class MenuButton : public ShooterObject {
-    private:
-        enum button_state
-        {
-            MOUSE_OUT = 0,
-            MOUSE_OVER = 1,
-            CLICKED = 2
-        };
+public:
+  MenuButton(std::shared_ptr<InputHandler> &inputHandler);
+  virtual ~MenuButton() {}
 
-        bool m_bReleased;
-        int m_callbackID;
-        void (*m_callback)();
-        
-    public:    
-        MenuButton();
-        virtual ~MenuButton() {}
+  virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 
-        virtual void load(std::unique_ptr<LoaderParams> const &pParams);
+  virtual void draw();
+  virtual void update();
+  virtual void clean();
 
-        virtual void draw();
-        virtual void update();
-        virtual void clean();
+  void setCallback(void (*callback)()) { m_callback = callback; }
+  int getCallbackID() { return m_callbackID; }
 
-        void setCallback(void(*callback)()) { m_callback = callback;}
-        int getCallbackID() { return m_callbackID; }
+private:
+  enum button_state { MOUSE_OUT = 0, MOUSE_OVER = 1, CLICKED = 2 };
+
+  bool m_bReleased;
+  int m_callbackID;
+  void (*m_callback)();
+
+  std::shared_ptr<InputHandler> m_inputHandler;
 };
 
 class MenuButtonCreator : public BaseCreator {
-    GameObject* createGameObject() const {
-        return new MenuButton();
-    }
+  GameObject *
+  createGameObject(std::shared_ptr<InputHandler> &inputHandler) const {
+    return new MenuButton(inputHandler);
+  }
 };
-
-#endif /* defined(__SDL_Game_Programming_Book__MenuObject__) */

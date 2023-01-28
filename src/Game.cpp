@@ -1,20 +1,10 @@
 #include "Game.h"
 
-Game *Game::s_pInstance = 0;
-
-Game *Game::Instance() {
-  if (s_pInstance == 0) {
-    s_pInstance = new Game();
-    return s_pInstance;
-  }
-
-  return s_pInstance;
-}
-
 Game::Game()
     : m_pWindow(), m_pRenderer(), m_bRunning(false), m_pGameStateMachine(),
       m_playerLives(3), m_scrollSpeed(0.8), m_bLevelComplete(false),
-      m_bChangingState(false) {
+      m_bChangingState(false), m_pSoundManager(), m_pTextureManager(),
+      m_pGameObjFactory(), m_pInputHandler() {
 
   // add some level files to an array
   m_levelFiles.push_back(DATA_PREFIX "gfx/map1.tmx");
@@ -101,32 +91,34 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height,
     return false; // SDL init fail
   }
 
-  // add some sound effects - TODO move to better place
-  TheSoundManager::Instance()->load("DST_ElectroRock.ogg", "music1",
-                                    SOUND_MUSIC);
-  TheSoundManager::Instance()->load("boom.wav", "explode", SOUND_SFX);
-  TheSoundManager::Instance()->load("phaser.wav", "shoot", SOUND_SFX);
+  // initialise the texture manager
+  m_pTextureManager = std::make_shared<TextureManager>();
 
-  TheSoundManager::Instance()->playMusic("music1", -1);
+  // add some sound effects
+  m_pSoundManager = std::make_shared<SoundManager>();
+  m_pSoundManager->load("DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
+  m_pSoundManager->load("boom.wav", "explode", SOUND_SFX);
+  m_pSoundManager->load("phaser.wav", "shoot", SOUND_SFX);
 
-  // TheInputHandler::Instance()->initialiseJoysticks();
+  m_pSoundManager->playMusic("music1", -1);
+
+  // initialise the input handler
+  m_pInputHandler = std::make_shared<InputHandler>();
+  // inputHandler->initialiseJoysticks();
 
   // register the types for the game
-  TheGameObjectFactory::Instance()->registerType("MenuButton",
-                                                 new MenuButtonCreator());
-  TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
-  TheGameObjectFactory::Instance()->registerType(
-      "ScrollingBackground", new ScrollingBackgroundCreator());
-  TheGameObjectFactory::Instance()->registerType("Turret", new TurretCreator());
-  TheGameObjectFactory::Instance()->registerType("Glider", new GliderCreator());
-  TheGameObjectFactory::Instance()->registerType("ShotGlider",
-                                                 new ShotGliderCreator());
-  TheGameObjectFactory::Instance()->registerType("RoofTurret",
-                                                 new RoofTurretCreator());
-  TheGameObjectFactory::Instance()->registerType("Eskeletor",
-                                                 new EskeletorCreator());
-  TheGameObjectFactory::Instance()->registerType("Level1Boss",
-                                                 new Level1BossCreator());
+  m_pGameObjFactory = std::make_shared<GameObjectFactory>();
+  m_pGameObjFactory->registerType("MenuButton",
+                                  new MenuButtonCreator(m_pInputHandler));
+  m_pGameObjFactory->registerType("Player", new PlayerCreator());
+  m_pGameObjFactory->registerType("ScrollingBackground",
+                                  new ScrollingBackgroundCreator());
+  m_pGameObjFactory->registerType("Turret", new TurretCreator());
+  m_pGameObjFactory->registerType("Glider", new GliderCreator());
+  m_pGameObjFactory->registerType("ShotGlider", new ShotGliderCreator());
+  m_pGameObjFactory->registerType("RoofTurret", new RoofTurretCreator());
+  m_pGameObjFactory->registerType("Eskeletor", new EskeletorCreator());
+  m_pGameObjFactory->registerType("Level1Boss", new Level1BossCreator());
 
   // start the menu state
   m_pGameStateMachine = new GameStateMachine();
@@ -144,14 +136,14 @@ void Game::render() {
 
 void Game::update() { m_pGameStateMachine->update(); }
 
-void Game::handleEvents() { TheInputHandler::Instance()->update(); }
+void Game::handleEvents() { m_pInputHandler->update(); }
 
 void Game::clean() {
   std::cout << "cleaning game\n";
 
-  TheInputHandler::Instance()->clean();
-  TheTextureManager::Instance()->clearTextureMap();
-  TheSoundManager::Instance()->clearSoundMap();
+  m_pInputHandler->clean();
+  m_pTextureManager->clearTextureMap();
+  m_pSoundManager->clearSoundMap();
 
   m_pGameStateMachine->clean();
   delete m_pGameStateMachine;

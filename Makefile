@@ -48,4 +48,4 @@ run-test:
 
 test-target: $(TESTOBJS)
 	mkdir -p $(BIN_DIR)
-	$(CC) $^ $(LIB) -lgtest -lgmock -pthread -o $(TESTTARGET)
+	$(CC) $^ $(LIB) -o $(TESTTARGET)
