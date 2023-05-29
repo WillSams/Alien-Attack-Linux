@@ -4,7 +4,7 @@ This is an example project from ['SDL Game Development' by Shaun Mitchell][1], a
 
 I originally created this repo back in 2014 as I worked my way through the book.  In December 2022, I decided I wanted to pick up C/C++ games development again, unfortunately breaking any forked version of this repo.  I decided to revisit this project and see improve upon it as I write my own game engine throughout 2023.  I plan to make a number of changes, including:
 
-* Adding support for Nintendo Switch.  This is possible because of the [libnx][9] port of SDL.  This also includes:
+* Adding support for Nintendo Switch.  This is possible because of the [libnx][9] port of SDL.
 * Switching to libtinyxml2 instead of libtinyxml.  Very much linked to the previous bullet point.
 
 I've done the above already in another unlinked repo.  I plan to merge those changes into this repo over the next few days.
