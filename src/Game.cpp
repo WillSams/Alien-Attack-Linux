@@ -103,7 +103,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height,
     }
     
     // add some sound effects - TODO move to better place
-    TheSoundManager::Instance()->load("DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
+    TheSoundManager::Instance()->load("DST_ElectroRock.mp3", "music1", SOUND_MUSIC);
     TheSoundManager::Instance()->load("boom.wav", "explode", SOUND_SFX);
     TheSoundManager::Instance()->load("phaser.wav", "shoot", SOUND_SFX);
     
