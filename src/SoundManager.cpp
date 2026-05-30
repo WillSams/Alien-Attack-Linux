@@ -13,15 +13,23 @@ SoundManager* SoundManager::Instance()  {
 
 SoundManager::SoundManager()
 {
-    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024)!= 0)
-    {   
-        std::cout << "Could not init mixer:  " << Mix_GetError() << std::endl;
+    int flags = MIX_INIT_OGG | MIX_INIT_MP3;
+    int initted = Mix_Init(flags);
+    if((initted & MIX_INIT_MP3) == 0)
+    {
+        std::cout << "Could not init MP3 support: " << Mix_GetError() << std::endl;
+    }
+
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0)
+    {
+        std::cout << "Could not open audio: " << Mix_GetError() << std::endl;
     }
 }
 
 SoundManager::~SoundManager()
-{;
+{
     Mix_CloseAudio();
+    Mix_Quit();
 }
 
 bool SoundManager::load(std::string fileName, std::string id, sound_type type)
